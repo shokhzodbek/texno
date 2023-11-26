@@ -1,0 +1,10 @@
+.header-mobile {
+  height: 100px;
+  background-color: blue;
+}
+
+@media (min-width: 1100px) {
+  .header-mobile {
+    display: none;
+  }
+}
