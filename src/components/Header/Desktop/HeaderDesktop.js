@@ -1,15 +1,45 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { BiHeart } from "react-icons/bi";
 import { HiOutlineMenu } from "react-icons/hi";
 import { LuSearch } from "react-icons/lu";
 import { FiUser } from "react-icons/fi";
 import { MdOutlineShoppingCart } from "react-icons/md";
+import { MdOutlineClose } from "react-icons/md";
 import "./HeaderDesktop.css";
-
+import LoginCard from "../../Cards/LoginCard";
+import DisktopMenu from "../../Menu/DisktopMenu";
+import axios from "axios";
+import { Link } from "react-router-dom";
 function HeaderDesktop() {
+  const [openLogin, setOpenLogin] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
+  const [value, setValue] = useState("");
+  const [data, setData] = useState([]);
+  function getData() {
+    axios
+      .get(`https://dummyjson.com/products/search?q=${value}`)
+      .then((res) => setData(res.data))
+      .then((js) => console.log(js))
+      .catch((err) => console.log(err));
+  }
+  useEffect(() => {
+    getData();
+  }, [value]);
+
+  console.log(data);
+  console.log(value);
+  function openLog() {
+    setOpenLogin(true);
+  }
+  function closeSearch() {
+    setValue("");
+  }
+  function openDesMenu() {
+    setOpenMenu(!openMenu);
+  }
   return (
-    <div className="header-desktop">
+    <div className="header-desktop" onClick={closeSearch}>
       {/* Header top start */}
       <div className="header-top-container">
         <div className="header-desktop-top">
@@ -69,17 +99,52 @@ function HeaderDesktop() {
               src="https://texnomart.uz/_nuxt/img/texnomart-logo.fcda25c.svg"
               alt=""
             />
-            <button>
-              <HiOutlineMenu fontSize={20} style={{ marginRight: 10 }} />{" "}
+            <button onClick={openDesMenu}>
+              {openMenu ? (
+                <MdOutlineClose fontSize={20} style={{ marginRight: 10 }} />
+              ) : (
+                <HiOutlineMenu fontSize={20} style={{ marginRight: 10 }} />
+              )}
               Katalog
             </button>
+            {/* {open ? <div className="menu"></div> : <span></span>} */}
+
             <div className="search-input">
               <LuSearch />
-              <input type="text" placeholder="Qidirish" />
+              <input
+                type="text"
+                placeholder="Qidirish"
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+              />
+              {value === "" ? (
+                ""
+              ) : (
+                <div className="search-block">
+                  {data?.products?.map((item) => (
+                    <Link to={`product/detail/${item.id}`}>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          margin: 20,
+                        }}
+                      >
+                        <img
+                          style={{ width: 60, marginRight: 20 }}
+                          src={item.thumbnail}
+                          alt=""
+                        />
+                        <p>{item.title}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
           <div className="header-middle-right">
-            <div className="header-right-box">
+            <div className="header-right-box" onClick={openLog}>
               <FiUser />
               <span>Kirish</span>
             </div>
@@ -114,8 +179,9 @@ function HeaderDesktop() {
           </ul>
         </div>
       </div>
-
       {/* Header-bottom end */}
+      {openMenu && <DisktopMenu />}
+      {openLogin && <LoginCard handlerState={setOpenLogin} />}
     </div>
   );
 }

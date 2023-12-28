@@ -1,0 +1,80 @@
+.disktop-menu-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.disktop-menu {
+  width: 85%;
+  height: 85vh;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  position: absolute;
+  background-color: rgb(183, 246, 189);
+  top: 0;
+  padding: 5px;
+  z-index: 999;
+  display: flex;
+}
+.disktop-menu-left {
+  flex-grow: 1;
+  min-width: 400px;
+}
+.disktop-menu-right {
+  flex-grow: 10;
+  color: rgb(34, 34, 34);
+  font-weight: 400;
+  /* background-color: red; */
+  padding: 10px 50px;
+  box-sizing: border-box;
+}
+.disktop-menu-left ul {
+  margin: 0;
+  padding: 0;
+}
+.disktop-menu-left ul li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin: 5px 0;
+  border-radius: 10px;
+}
+.disktop-menu-left .li-hover {
+  background-color: bisque;
+}
+.disktop-menu-left .li-hover .menu-icon,
+.disktop-menu-left .li-hover span {
+  color: black;
+}
+.disktop-menu-left ul li div {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: gray;
+}
+.disktop-menu-left ul li div img {
+  margin-right: 20px;
+}
+.menu-icon {
+  color: gray;
+}
+.menu-right-container {
+  height: 80%;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+}
+.menu-item ul {
+  margin: 0;
+  padding: 0;
+}
+.menu-item ul li {
+  list-style: none;
+}
+@media (max-width: 1380px) {
+  .disktop-menu {
+    width: 100%;
+  }
+}
